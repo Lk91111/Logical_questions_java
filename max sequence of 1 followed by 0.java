@@ -30,3 +30,6 @@ public class MyClass {
         return maxIndex;
     }
 }
+
+
+//OUTPUT :- 5
