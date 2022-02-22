@@ -18,3 +18,6 @@ public class MyClass {
       System.out.println(arr2);
     }
 }
+
+//OUTPUT
+//[1,2,3,4,5,7]
