@@ -11,6 +11,10 @@ public class MyClass {
               if(i==arr1.length-2){
                 arr2.add(arr1[i+1]);
             }
+          }else{
+            if(i==arr1.length-2){
+                arr2.add(arr1[i+1]);
+            }
           }
           
           
