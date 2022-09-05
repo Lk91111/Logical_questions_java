@@ -53,4 +53,4 @@ public class MyClass {
 
 
 //Output : 
-//Max Possible sum from all weight : 26
+//Max Possible sum from all weight : 177
