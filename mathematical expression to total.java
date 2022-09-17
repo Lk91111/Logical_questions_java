@@ -197,7 +197,7 @@ public class MyClass {
                     
                     String ss=sum+""+ex.substring(k);
                     
-                    if(ss.charAt(0)=='-'&& !ss.split("-").length>1 && !ss.contains("+")&& !ss.contains("*")&& !ss.contains("/")){
+                    if(ss.charAt(0)=='-'&& ss.split("-").length<2 && !ss.contains("+")&& !ss.contains("*")&& !ss.contains("/")){
                         return sum;
                     }else{
                         sum=fun(ss);
