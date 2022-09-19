@@ -2,7 +2,17 @@ public class MyClass {
     public static void main(String args[]) {
       String s = "[7,2,[2,[6,4,8],4]]";
       
-      System.out.println("NLR expression : "+fun(s));
+      String type = "nlr";
+      
+      if(type.toLowerCase().equals("nlr")){
+          System.out.println("NLR expression : "+fun(s));
+      }else if(type.toLowerCase().equals("lrn")){
+          System.out.println("LRN expression : "+fun2(s));
+      }else if(type.toLowerCase().equals("rln")){
+          System.out.println("RLN expression : "+fun3(s));
+      }
+      
+      
       
       
     }
@@ -114,6 +124,242 @@ public class MyClass {
                 }else{
                     String[] nlr= s.split(",");
                     s=nlr[1]+","+nlr[0]+","+nlr[2];
+                }
+                
+            }
+            
+        }
+        
+        
+        
+        return s;
+    }
+    
+    public static String fun2(String s){
+        String fin ="";
+        int count1=0, ind1=0;
+        int count2=0, ind2=0;
+        int c=0;
+        
+        if(s.charAt(0)=='[' && s.charAt(s.length()-1)==']'){
+            s=s.substring(1,s.length()-1);
+        }
+        
+        System.out.println("S = "+s);
+        
+        if(s.contains("[")){
+            
+            for(int i=0; i<s.length();i++){
+                if(s.charAt(i)=='['){
+                   
+                    count1++;
+                    if(count1==1){
+                        ind1=i;
+                    }
+                    
+                }else if(s.charAt(i)==']'){
+                    
+                    count2++;
+                    ind2=i;
+                    if(count1==count2){
+                        
+                        break;
+                    }
+                }else{
+                    continue;
+                }
+            }
+            
+            if(ind1==0){
+                //System.out.println("start ");
+                c=0;
+                if(s.substring(ind2+2,s.length()).split(",").length==2){
+                    
+                    s=fun2(s.substring(ind1+1,ind2))+";"+s.substring(ind2+2,s.length()).split(",")[1]+";"+s.substring(ind2+2,s.length()).split(",")[0];
+                }else{
+                    
+                    if(s.substring(ind2+2,s.length()).split(",").length>2){
+                        
+                        if(s.substring(ind2+2,s.length()).split(",")[1].contains("[")){
+                            
+                            s=fun2(s.substring(ind1+1,ind2))+";["+s.substring(ind2+2,s.length()).split("\\[",2)[1]+";"+s.substring(ind2+2,s.length()).split("\\[",2)[0].replace(",","");
+                        }else if(s.substring(ind2+2,s.length()).split(",")[0].contains("[")){
+                            
+                            if(s.substring(ind2+2,s.length()).split(",")[0].split("\\[").length>2){
+                                
+                               s=fun2(s.substring(ind1+1,ind2))+";["+s.substring(ind2+2,s.length()).split("\\[",2)[1].split("\\[",2)[1].split("\\]",2)[0]+"]"+";"+"["+s.substring(ind2+2,s.length()).split("\\[",2)[1].split("\\]",2)[0]+"]"; 
+                            }else{
+                                
+                                s=fun2(s.substring(ind1+1,ind2))+";"+s.substring(ind2+2,s.length()).split("\\]",2)[1].substring(1)+";"+"["+s.substring(ind2+2,s.length()).split("\\[",2)[1].split("\\]",2)[0]+"]";
+                            }
+                            
+                        }else{
+                            
+                            s=fun2(s.substring(ind1+1,ind2))+";"+s.substring(ind2+2,s.length());
+                        }
+                        
+                    }else{
+                        
+                        s=fun2(s.substring(ind1+1,ind2))+";"+s.substring(ind2+2,s.length());
+                    }
+                    
+                }
+                
+                //System.out.println("ss== "+s);
+            }else if(ind2==s.length()-1){
+                
+                c=0;
+                if(s.substring(0,ind1-1).split(",").length==2){
+                    s=s.substring(0,ind1-1).split(",")[0]+";"+fun2(s.substring(ind1+1,ind2))+";"+s.substring(0,ind1-1).split(",")[1];
+                }else{
+                    s=s.substring(0,ind1-1)+";"+fun2(s.substring(ind1+1,ind2));
+                }
+                
+            }else{
+                //System.out.println("cc");
+                s=s.substring(0,ind1-1)+";"+s.substring(ind2+2,s.length())+";"+fun2(s.substring(ind1+1,ind2));
+                //s="["+s+"]";
+                c=1;
+            }
+            
+            
+            //System.out.println("new s= "+s);
+            
+            
+            s=fun2("["+s+"]");
+            
+        }else{
+            
+            if(s.contains("[")){
+                //System.out.println("check4 if");
+            }else{
+                //System.out.println("check4 else");
+                
+                if(s.contains(";")){
+                    
+                    s=s.replaceAll(";",",");
+                    
+                }else{
+                    String[] nlr= s.split(",");
+                    s=nlr[0]+","+nlr[2]+","+nlr[1];
+                }
+                
+            }
+            
+        }
+        
+        
+        
+        return s;
+    }
+    
+    public static String fun3(String s){
+        String fin ="";
+        int count1=0, ind1=0;
+        int count2=0, ind2=0;
+        int c=0;
+        
+        if(s.charAt(0)=='[' && s.charAt(s.length()-1)==']'){
+            s=s.substring(1,s.length()-1);
+        }
+        
+        System.out.println("S = "+s);
+        
+        if(s.contains("[")){
+            
+            for(int i=0; i<s.length();i++){
+                if(s.charAt(i)=='['){
+                   
+                    count1++;
+                    if(count1==1){
+                        ind1=i;
+                    }
+                    
+                }else if(s.charAt(i)==']'){
+                    
+                    count2++;
+                    ind2=i;
+                    if(count1==count2){
+                        
+                        break;
+                    }
+                }else{
+                    continue;
+                }
+            }
+            
+            if(ind1==0){
+                //System.out.println("start ");
+                c=0;
+                if(s.substring(ind2+2,s.length()).split(",").length==2){
+                    
+                    s=s.substring(ind2+2,s.length()).split(",")[1]+";"+fun3(s.substring(ind1+1,ind2))+";"+s.substring(ind2+2,s.length()).split(",")[0];
+                }else{
+                    
+                    if(s.substring(ind2+2,s.length()).split(",").length>2){
+                        
+                        if(s.substring(ind2+2,s.length()).split(",")[1].contains("[")){
+                            
+                            s="["+s.substring(ind2+2,s.length()).split("\\[",2)[1]+";"+fun3(s.substring(ind1+1,ind2))+";"+s.substring(ind2+2,s.length()).split("\\[",2)[0].replace(",","");
+                        }else if(s.substring(ind2+2,s.length()).split(",")[0].contains("[")){
+                            
+                            if(s.substring(ind2+2,s.length()).split(",")[0].split("\\[").length>2){
+                                
+                               s=";["+s.substring(ind2+2,s.length()).split("\\[",2)[1].split("\\[",2)[1].split("\\]",2)[0]+"]"+";"+fun3(s.substring(ind1+1,ind2))+";"+"["+s.substring(ind2+2,s.length()).split("\\[",2)[1].split("\\]",2)[0]+"]"; 
+                            }else{
+                                
+                                s=s.substring(ind2+2,s.length()).split("\\]",2)[1].substring(1)+";"+fun3(s.substring(ind1+1,ind2))+";"+"["+s.substring(ind2+2,s.length()).split("\\[",2)[1].split("\\]",2)[0]+"]";
+                            }
+                            
+                        }else{
+                            
+                            s=fun3(s.substring(ind1+1,ind2))+";"+s.substring(ind2+2,s.length());
+                        }
+                        
+                    }else{
+                        
+                        s=fun3(s.substring(ind1+1,ind2))+";"+s.substring(ind2+2,s.length());
+                    }
+                    
+                }
+                
+                //System.out.println("ss== "+s);
+            }else if(ind2==s.length()-1){
+                
+                c=0;
+                if(s.substring(0,ind1-1).split(",").length==2){
+                    s=fun3(s.substring(ind1+1,ind2))+";"+s.substring(0,ind1-1).split(",")[0]+";"+s.substring(0,ind1-1).split(",")[1];
+                }else{
+                    s=s.substring(0,ind1-1)+";"+fun3(s.substring(ind1+1,ind2));
+                }
+                
+            }else{
+                //System.out.println("cc");
+                s=s.substring(ind2+2,s.length())+";"+s.substring(0,ind1-1)+";"+fun3(s.substring(ind1+1,ind2));
+                //s="["+s+"]";
+                c=1;
+            }
+            
+            
+            //System.out.println("new s= "+s);
+            
+            
+            s=fun3("["+s+"]");
+            
+        }else{
+            
+            if(s.contains("[")){
+                //System.out.println("check4 if");
+            }else{
+                //System.out.println("check4 else");
+                
+                if(s.contains(";")){
+                    
+                    s=s.replaceAll(";",",");
+                    
+                }else{
+                    String[] nlr= s.split(",");
+                    s=nlr[2]+","+nlr[0]+","+nlr[1];
                 }
                 
             }
